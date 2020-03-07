@@ -95,18 +95,18 @@ module Jets::Commands
       return unless @bootstrap
 
       # Add jquery and popper plugin to handle Delete of CRUD
-      jquery =<<-JS
-const webpack = require('webpack')
-environment.plugins.prepend('Provide', new webpack.ProvidePlugin({
-  $: 'jquery',
-  jQuery: 'jquery',
-  Popper: ['popper.js', 'default']
-}))
-JS
+      jquery =<<~JS
+        const webpack = require('webpack')
+        environment.plugins.prepend('Provide', new webpack.ProvidePlugin({
+          $: 'jquery',
+          jQuery: 'jquery',
+          Popper: ['popper.js', 'default']
+        }))
+      JS
       after = "const { environment } = require('@rails/webpacker')\n"
       insert_into_file("config/webpack/environment.js", jquery, after: after)
 
-      run("yarn add bootstrap@4.0.0-beta jquery popper.js postcss-cssnext")
+      run("yarn add bootstrap jquery popper.js postcss-cssnext")
     end
 
     def git_init
